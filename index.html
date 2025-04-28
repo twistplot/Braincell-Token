@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Braincell Token (BRAIN)</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+      padding: 50px;
+      color: #333;
+    }
+    .logo {
+      width: 200px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 3em;
+    }
+    p {
+      font-size: 1.5em;
+      margin-top: 20px;
+    }
+    .buy-button {
+      background-color: #ff6f61;
+      padding: 15px 30px;
+      border-radius: 30px;
+      color: white;
+      font-size: 1.2em;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 30px;
+      transition: 0.3s;
+    }
+    .buy-button:hover {
+      background-color: #ff3b2e;
+    }
+
+    /* Chatbot Widget */
+    #chatbot {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+    }
+    .chatbot-header {
+      background-color: #ff6f61;
+      color: white;
+      padding: 10px;
+      border-radius: 8px 8px 0 0;
+      text-align: center;
+    }
+    .chatbot-body {
+      flex-grow: 1;
+      padding: 10px;
+      overflow-y: auto;
+    }
+    .messages {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .user-msg, .bot-msg {
+      background-color: #f1f1f1;
+      padding: 10px;
+      border-radius: 10px;
+      max-width: 80%;
+    }
+    .bot-msg {
+      background-color: #ffecd2;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 20px;
+      border-radius: 20px;
+      background-color: #ff6f61;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #ff3b2e;
+    }
+  </style>
+</head>
+<body>
+  <!-- Braincell Token Header Section -->
+  <img src="brain_logo.png" alt="Braincell Token Logo" class="logo">
+  <h1>Braincell Token (BRAIN)</h1>
+  <p>The smartest coin on Solana. Buy BRAIN, gain braincells, win life.</p>
+  <a href="https://pump.fun/" class="buy-button" target="_blank">Buy on Pump.fun</a>
+
+  <!-- Chatbot Widget -->
+  <div id="chatbot" class="chatbot">
+    <div class="chatbot-header">
+      <span>Brainbot</span>
+    </div>
+    <div class="chatbot-body">
+      <div class="messages"></div>
+    </div>
+    <input type="text" id="user-input" placeholder="Ask Brainbot...">
+    <button id="send-btn">Send</button>
+  </div>
+
+  <!-- Chatbot Script -->
+  <script>
+    const messages = document.querySelector('.messages');
+    const userInput = document.querySelector('#user-input');
+    const sendBtn = document.querySelector('#send-btn');
+
+    const botReplies = {
+      "How to buy BRAIN?": "Use your last braincell to click BUY.",
+      "When moon?": "As soon as your brain hits orbit.",
+      "Is this legit?": "Legit enough for your IQ level.",
+      "What is BRAIN?": "The smartest coin on Solana. Gain braincells, gain life!",
+      "Help me!": "Use your braincell, click BUY BRAIN, and watch your life improve!"
+    };
+
+    function sendMessage(msg, sender) {
+      const div = document.createElement('div');
+      div.classList.add(sender === 'user' ? 'user-msg' : 'bot-msg');
+      div.textContent = msg;
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    sendBtn.addEventListener('click', () => {
+      const userMessage = userInput.value.trim();
+      if (userMessage) {
+        sendMessage(userMessage, 'user');
+        const botResponse = botReplies[userMessage] || "I didn't quite catch that. Try asking about BRAIN.";
+        setTimeout(() => sendMessage(botResponse, 'bot'), 1000);
+        userInput.value = '';
+      }
+    });
+
+    userInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendBtn.click();
+      }
+    });
+
+    // Initial Bot Message
+    setTimeout(() => sendMessage("Welcome to Braincell Token! Ask me anything.", 'bot'), 1000);
+  </script>
+</body>
+</html>
