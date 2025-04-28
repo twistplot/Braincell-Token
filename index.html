@@ -4,38 +4,162 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Braincell Token (BRAIN)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <style>
+    :root {
+      --primary: #ff6f61;
+      --secondary: #ffecd2;
+      --dark: #1a1a2e;
+      --light: #f8f9fa;
+      --accent: #fcb69f;
+    }
+    
     body {
-      background: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: var(--dark);
+      font-family: 'Poppins', sans-serif;
+      color: var(--light);
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      padding: 40px 0;
       text-align: center;
-      padding: 50px;
-      color: #333;
+      border-radius: 0 0 30px 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      margin-bottom: 50px;
     }
+    
     .logo {
-      width: 200px;
+      width: 180px;
+      height: 180px;
+      object-fit: contain;
       margin-bottom: 20px;
+      filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+      transition: all 0.3s ease;
     }
+    
+    .logo:hover {
+      transform: rotate(10deg) scale(1.1);
+    }
+    
     h1 {
-      font-size: 3em;
+      font-size: 3.5em;
+      margin: 0;
+      background: linear-gradient(to right, #fff 0%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    p {
+    
+    .tagline {
       font-size: 1.5em;
-      margin-top: 20px;
+      margin: 15px 0 30px;
+      opacity: 0.9;
     }
+    
     .buy-button {
-      background-color: #ff6f61;
-      padding: 15px 30px;
-      border-radius: 30px;
-      color: white;
+      background-color: var(--light);
+      color: var(--primary);
+      padding: 15px 40px;
+      border-radius: 50px;
       font-size: 1.2em;
+      font-weight: bold;
       text-decoration: none;
       display: inline-block;
-      margin-top: 30px;
-      transition: 0.3s;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      border: none;
+      cursor: pointer;
     }
+    
     .buy-button:hover {
-      background-color: #ff3b2e;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      background-color: var(--secondary);
+    }
+    
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin: 60px 0;
+    }
+    
+    .feature-card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      background: rgba(255,255,255,0.15);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    
+    .feature-card h3 {
+      color: var(--primary);
+      font-size: 1.8em;
+      margin-top: 0;
+    }
+    
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin: 60px 0;
+      gap: 20px;
+    }
+    
+    .stat-item {
+      text-align: center;
+      background: rgba(255,255,255,0.05);
+      padding: 30px;
+      border-radius: 15px;
+      min-width: 200px;
+    }
+    
+    .stat-number {
+      font-size: 3em;
+      font-weight: bold;
+      color: var(--primary);
+      margin: 10px 0;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 30px;
+      margin-top: 60px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 30px 30px 0 0;
+    }
+    
+    .social-links {
+      margin: 20px 0;
+    }
+    
+    .social-links a {
+      color: var(--light);
+      margin: 0 15px;
+      font-size: 1.5em;
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      color: var(--primary);
+      transform: scale(1.2);
     }
 
     /* Chatbot Widget */
@@ -43,78 +167,212 @@
       position: fixed;
       bottom: 20px;
       right: 20px;
-      width: 300px;
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      width: 350px;
+      background-color: var(--dark);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
       display: flex;
       flex-direction: column;
-      padding: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+      overflow: hidden;
+      z-index: 1000;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.3s ease;
     }
+    
+    #chatbot.active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
     .chatbot-header {
-      background-color: #ff6f61;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
       color: white;
-      padding: 10px;
-      border-radius: 8px 8px 0 0;
+      padding: 15px;
       text-align: center;
+      font-weight: bold;
+      font-size: 1.2em;
     }
+    
     .chatbot-body {
       flex-grow: 1;
-      padding: 10px;
+      padding: 15px;
       overflow-y: auto;
+      max-height: 400px;
     }
+    
     .messages {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
+    
     .user-msg, .bot-msg {
-      background-color: #f1f1f1;
-      padding: 10px;
-      border-radius: 10px;
+      padding: 12px 15px;
+      border-radius: 15px;
       max-width: 80%;
+      line-height: 1.4;
+      position: relative;
     }
+    
+    .user-msg {
+      background: rgba(255,111,97,0.2);
+      border: 1px solid rgba(255,111,97,0.3);
+      align-self: flex-end;
+      border-bottom-right-radius: 5px;
+    }
+    
     .bot-msg {
-      background-color: #ffecd2;
+      background: rgba(255,236,210,0.2);
+      border: 1px solid rgba(255,236,210,0.3);
+      align-self: flex-start;
+      border-bottom-left-radius: 5px;
     }
-    input[type="text"] {
-      width: 100%;
+    
+    .chatbot-input {
+      display: flex;
       padding: 10px;
-      margin-top: 10px;
-      border-radius: 20px;
-      border: 1px solid #ccc;
+      background: rgba(0,0,0,0.2);
     }
-    button {
-      padding: 10px 20px;
-      border-radius: 20px;
-      background-color: #ff6f61;
+    
+    #user-input {
+      flex-grow: 1;
+      padding: 12px 15px;
+      border-radius: 50px;
+      border: none;
+      background: rgba(255,255,255,0.1);
+      color: var(--light);
+      outline: none;
+    }
+    
+    #send-btn {
+      padding: 12px 20px;
+      border-radius: 50px;
+      background: var(--primary);
       color: white;
       border: none;
       cursor: pointer;
-      margin-top: 10px;
+      margin-left: 10px;
+      transition: all 0.3s ease;
     }
-    button:hover {
-      background-color: #ff3b2e;
+    
+    #send-btn:hover {
+      background: var(--accent);
+      transform: scale(1.05);
+    }
+    
+    .chatbot-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5em;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      z-index: 999;
+      transition: all 0.3s ease;
+    }
+    
+    .chatbot-toggle:hover {
+      transform: scale(1.1);
+      background: var(--accent);
+    }
+    
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5em;
+      }
+      
+      .tagline {
+        font-size: 1.2em;
+      }
+      
+      #chatbot {
+        width: 90%;
+        right: 5%;
+        bottom: 80px;
+      }
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-  <!-- Braincell Token Header Section -->
-  <img src="brain_logo.png" alt="Braincell Token Logo" class="logo">
-  <h1>Braincell Token (BRAIN)</h1>
-  <p>The smartest coin on Solana. Buy BRAIN, gain braincells, win life.</p>
-  <a href="https://pump.fun/" class="buy-button" target="_blank">Buy on Pump.fun</a>
+  <header class="animate__animated animate__fadeIn">
+    <div class="container">
+      <img src="brain_logo.png" alt="Braincell Token Logo" class="logo animate__animated animate__bounceIn">
+      <h1 class="animate__animated animate__fadeInUp">Braincell Token</h1>
+      <p class="tagline animate__animated animate__fadeInUp animate__delay-1s">The smartest coin on Solana. Buy BRAIN, gain braincells, win life.</p>
+      <a href="https://pump.fun/" class="buy-button animate__animated animate__fadeInUp animate__delay-2s" target="_blank">Buy on Pump.fun</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="features">
+      <div class="feature-card animate__animated animate__fadeInUp animate__delay-1s">
+        <h3><i class="fas fa-brain"></i> Brain Power</h3>
+        <p>Each BRAIN token increases your mental capacity by at least 0.0001%. (Results not guaranteed, but definitely possible.)</p>
+      </div>
+      <div class="feature-card animate__animated animate__fadeInUp animate__delay-2s">
+        <h3><i class="fas fa-rocket"></i> To The Moon</h3>
+        <p>Our trajectory is set for lunar orbit. Warning: may cause sudden bursts of intelligence and financial gains.</p>
+      </div>
+      <div class="feature-card animate__animated animate__fadeInUp animate__delay-3s">
+        <h3><i class="fas fa-shield-alt"></i> Ironclad Security</h3>
+        <p>Your braincells are safer with us than in your head. Our security protocols are smarter than the average bear.</p>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat-item animate__animated animate__fadeIn">
+        <div class="stat-number">100%</div>
+        <div>Of your missing braincells</div>
+      </div>
+      <div class="stat-item animate__animated animate__fadeIn animate__delay-1s">
+        <div class="stat-number">∞</div>
+        <div>Potential IQ points</div>
+      </div>
+      <div class="stat-item animate__animated animate__fadeIn animate__delay-2s">
+        <div class="stat-number">0</div>
+        <div>Braincells required to invest</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="social-links">
+      <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+      <a href="#" target="_blank"><i class="fab fa-telegram"></i></a>
+      <a href="#" target="_blank"><i class="fab fa-discord"></i></a>
+    </div>
+    <p>© 2023 Braincell Token. All rights reserved. (Even the dumb ones.)</p>
+  </footer>
+
+  <!-- Chatbot Toggle Button -->
+  <div class="chatbot-toggle" id="chatbot-toggle">
+    <i class="fas fa-robot"></i>
+  </div>
 
   <!-- Chatbot Widget -->
-  <div id="chatbot" class="chatbot">
+  <div id="chatbot">
     <div class="chatbot-header">
-      <span>Brainbot</span>
+      <span>Brainbot Assistant</span>
     </div>
     <div class="chatbot-body">
       <div class="messages"></div>
     </div>
-    <input type="text" id="user-input" placeholder="Ask Brainbot...">
-    <button id="send-btn">Send</button>
+    <div class="chatbot-input">
+      <input type="text" id="user-input" placeholder="Ask about BRAIN...">
+      <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+    </div>
   </div>
 
   <!-- Chatbot Script -->
@@ -122,13 +380,40 @@
     const messages = document.querySelector('.messages');
     const userInput = document.querySelector('#user-input');
     const sendBtn = document.querySelector('#send-btn');
+    const chatbot = document.querySelector('#chatbot');
+    const chatbotToggle = document.querySelector('#chatbot-toggle');
 
     const botReplies = {
       "How to buy BRAIN?": "Use your last braincell to click BUY.",
       "When moon?": "As soon as your brain hits orbit.",
       "Is this legit?": "Legit enough for your IQ level.",
       "What is BRAIN?": "The smartest coin on Solana. Gain braincells, gain life!",
-      "Help me!": "Use your braincell, click BUY BRAIN, and watch your life improve!"
+      "Help me!": "Use your braincell, click BUY BRAIN, and watch your life improve!",
+      "Why BRAIN?": "Because you clearly need more braincells in your portfolio.",
+      "Tokenomics?": "100% of tokens go to people smart enough to buy BRAIN.",
+      "Team?": "We're anonymous geniuses with too many braincells to count.",
+      "Roadmap?": "Step 1: Buy BRAIN. Step 2: Gain braincells. Step 3: Profit!",
+      "Contract address?": "Check your brain wallet - it's already there waiting for you.",
+      "How many braincells do I get?": "1 BRAIN = 1 braincell. Simple math for simple minds.",
+      "Partnerships?": "We partner exclusively with high-IQ individuals (like you, hopefully).",
+      "Marketing plan?": "Word of mouth - if you can remember to speak after buying BRAIN.",
+      "Why Solana?": "Because Ethereum would require more braincells than you have.",
+      "Staking?": "Stake your BRAIN to grow more braincells (coming soon to a brain near you).",
+      "NFTs?": "Brain scans coming soon as NFTs - prove you have at least one braincell!",
+      "Community?": "Join our brain trust on Telegram (if you can figure out how).",
+      "Whitepaper?": "Too many words for your braincell count. Just buy BRAIN.",
+      "Airdrop?": "We airdrop knowledge directly to your brain (requires BRAIN tokens).",
+      "Price prediction?": "1 BRAIN = priceless (but technically whatever you're willing to pay).",
+      "How to sell?": "Why would you sell braincells? That's just dumb.",
+      "Security?": "Your braincells are safer with us than in your head.",
+      "What's the utility?": "BRAIN tokens cure stupidity (results may vary).",
+      "Max supply?": "Enough for everyone who claims to have a brain.",
+      "Burn mechanism?": "We burn the stupid questions people ask (like this one).",
+      "How to contribute?": "Buy BRAIN. Hold BRAIN. Spread BRAIN. It's that simple.",
+      "What makes BRAIN unique?": "It's the only token that actually makes you smarter (not financial advice).",
+      "Can I mine BRAIN?": "Only if you can mine your own business first.",
+      "Where lambo?": "In your dreams until you buy more BRAIN.",
+      "Taxes?": "The only tax is on your limited braincell capacity."
     };
 
     function sendMessage(msg, sender) {
@@ -155,8 +440,33 @@
       }
     });
 
+    // Toggle chatbot visibility
+    chatbotToggle.addEventListener('click', () => {
+      chatbot.classList.toggle('active');
+    });
+
     // Initial Bot Message
-    setTimeout(() => sendMessage("Welcome to Braincell Token! Ask me anything.", 'bot'), 1000);
+    setTimeout(() => {
+      chatbot.classList.add('active');
+      sendMessage("Welcome to Braincell Token! I'm Brainbot, your AI assistant. Ask me anything about BRAIN!", 'bot');
+    }, 2000);
+
+    // Add animations on scroll
+    const animateOnScroll = () => {
+      const elements = document.querySelectorAll('.animate__animated');
+      elements.forEach(el => {
+        const elementPosition = el.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.3;
+        
+        if (elementPosition < screenPosition) {
+          const animation = el.getAttribute('data-animate');
+          el.classList.add(animation);
+        }
+      });
+    };
+
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
   </script>
 </body>
 </html>
